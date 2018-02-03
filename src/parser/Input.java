@@ -54,14 +54,19 @@ public class Input {
 
     public ArrayList<Searched> makeQuery() {
         ArrayList<Searched> query = new ArrayList();
-        DocNodeType type = DocNodeType.UNDEFINED;
         String[] options = new String("d r a u p l").split(" ");
         for(String letter : options){
-            if(this.cmd.hasOption(letter)){
-                query.add(new Searched(type.refactor(letter), this.cmd.getOptionValue(letter)));
+            if(cmd.hasOption(letter)){
+                String xd = cmd.getOptionValue(letter);
+                Searched s = new Searched(DocNodeType.UNDEFINED, xd);
+                s.refactor(letter);
+                query.add(s);
             }
         }
         return query;
+    }
+
+    private void refactor(String letter) {
     }
 
 }

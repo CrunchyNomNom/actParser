@@ -1,4 +1,4 @@
-﻿package parser;
+package parser;
 
 public class Interpreter {
 
@@ -12,7 +12,7 @@ public class Interpreter {
         String activeContent = new String();
         String id = new String();
 
-        for (String line : text.replaceAll("\n", "#").split("#")) {
+        for (String line : text.replaceAll("\r\n", "#").split("#")) {
 
             if (line.matches("Art\\. .*")) {
                 node.setContent(activeContent);
@@ -21,12 +21,17 @@ public class Interpreter {
 
                 String[] lineContent = line.split(" ");
                 id = lineContent[1].replace(".", "");
-                activeContent = lineContent[0] + lineContent[1];
-                node = new DocNode(DocNodeType.ARTYKUL, id, node, activeContent);
                 if (lineContent[2].equals("1.")) {
+                    activeContent = lineContent[0] + lineContent[1];
+                    node = new DocNode(DocNodeType.ARTYKUL, id, node, activeContent);
+                    node.getParent().addToList(node);
                     node.setContent(activeContent);
                     activeContent = line.replaceFirst("Art\\. [0-9a-z]{1,4}\\. ", "");
                     node = new DocNode(DocNodeType.USTEP, "1", node, activeContent);
+                    node.getParent().addToList(node);
+                } else {
+                    activeContent = line;
+                    node = new DocNode(DocNodeType.ARTYKUL, id, node, activeContent);
                     node.getParent().addToList(node);
                 }
 
@@ -48,16 +53,6 @@ public class Interpreter {
                 id = line.split(" ")[1].replace(".", "");
                 activeContent = line;
                 node = new DocNode(DocNodeType.ROZDZIAL, id, node, activeContent);
-                node.getParent().addToList(node);
-
-            } else if (line.matches("[A-Z ]{4,}.*")) {
-                node.setContent(activeContent);
-                while (DocNodeType.TYTUL.getPriority() >= node.getType().getPriority())
-                    node = node.getParent();
-
-                id = line;
-                activeContent = line;
-                node = new DocNode(DocNodeType.TYTUL, id, node, activeContent);
                 node.getParent().addToList(node);
 
             } else if (line.matches("[0-9]{1,2}[a-z]{0,1}\\..*")) {
@@ -89,7 +84,7 @@ public class Interpreter {
                 activeContent = line;
                 node = new DocNode(DocNodeType.LITERA, id, node, activeContent);
                 node.getParent().addToList(node);
-            } else activeContent = activeContent + "\n" + line;
+            } else activeContent = activeContent + "\r\n" + line;
         }
         node.setContent(activeContent);
         return root;
