@@ -54,19 +54,28 @@ public class Input {
 
     public ArrayList<Searched> makeQuery() {
         ArrayList<Searched> query = new ArrayList();
+        DocNodeType type = DocNodeType.UNDEFINED;
         String[] options = new String("d r a u p l").split(" ");
         for(String letter : options){
             if(cmd.hasOption(letter)){
                 String xd = cmd.getOptionValue(letter);
-                Searched s = new Searched(DocNodeType.UNDEFINED, xd);
-                s.refactor(letter);
+                type = refactor(letter);
+                Searched s = new Searched(type, xd);
                 query.add(s);
             }
         }
         return query;
     }
 
-    private void refactor(String letter) {
+    public DocNodeType refactor(String s) {
+        switch (s){
+            case "d":      return DocNodeType.DZIAL;
+            case "r":      return DocNodeType.ROZDZIAL;
+            case "a":      return DocNodeType.ARTYKUL;
+            case "u":      return DocNodeType.USTEP;
+            case "p":      return DocNodeType.PUNKT;
+            case "l":      return DocNodeType.LITERA;
+            default:       return DocNodeType.UNDEFINED;
+        }
     }
-
 }

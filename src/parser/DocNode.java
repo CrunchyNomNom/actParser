@@ -34,7 +34,7 @@ public class DocNode {
     public String toString() {
         String result = content;
         for(DocNode node : list)
-            result = result + "\r\n" + node.toString();
+            result = result + "\n" + node.toString();
         return result;
     }
 

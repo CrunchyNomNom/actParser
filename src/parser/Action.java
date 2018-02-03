@@ -23,13 +23,12 @@ public class Action {
             byte[] mainArray = Files.readAllBytes(Paths.get(filePath));
             String text = clear(new String(mainArray, "UTF-8"));
             DocNode doc = in.makeDoc(text);
-            System.out.print("parsed");
             QueryResolver qr = new QueryResolver(input.makeQuery(), doc);
             ArrayList<DocNode> list = qr.run();
 
             String output = new String();
             for(DocNode node : list) {
-                output = output + node.toString() + "\r\n";
+                output = output + node.toString() + "\n";
             }
 
             System.out.print(output);
@@ -38,11 +37,11 @@ public class Action {
     }
 
     private String clear(String s){
-        return  s.replaceAll("-\r\n", "")
-                 .replaceAll(".Kancelaria Sejmu.*\r\n[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\r\n","")
-                 .replaceAll("\r\n.\r\n","")
+        return  s.replaceAll("-\n", "")
+                 .replaceAll(".Kancelaria Sejmu.*\n[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\n","")
+                 .replaceAll("\n.\n","")
                  .replaceFirst("s2p", " ")
-                 .replaceFirst(".KON.*\r\nRZECZY.*EJ\r\nz.*7 r.\r\n", "KONSTYTUCJA RZECZYPOSPOLITEJ\r\n")
-                 .replaceFirst("^Dz.U..*331\r\nUSTAWA\r\nz dnia .*r.\r\no oc.*ów\n", "USTAWA o Ochronie Konkurencji i Konsumentów\r\n");
+                 .replaceFirst(".KON.*\nRZECZY.*EJ\nz.*7 r.\n", "KONSTYTUCJA RZECZYPOSPOLITEJ\n")
+                 .replaceFirst("^Dz.U..*331\nUSTAWA\nz dnia .*r.\no oc.*ów\n", "USTAWA o Ochronie Konkurencji i Konsumentów\n");
     }
 }

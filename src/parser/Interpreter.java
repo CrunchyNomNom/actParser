@@ -12,7 +12,7 @@ public class Interpreter {
         String activeContent = new String();
         String id = new String();
 
-        for (String line : text.replaceAll("\r\n", "#").split("#")) {
+        for (String line : text.replaceAll("\n", "#").split("#")) {
 
             if (line.matches("Art\\. .*")) {
                 node.setContent(activeContent);
@@ -84,7 +84,7 @@ public class Interpreter {
                 activeContent = line;
                 node = new DocNode(DocNodeType.LITERA, id, node, activeContent);
                 node.getParent().addToList(node);
-            } else activeContent = activeContent + "\r\n" + line;
+            } else activeContent = activeContent + "\n" + line;
         }
         node.setContent(activeContent);
         return root;
