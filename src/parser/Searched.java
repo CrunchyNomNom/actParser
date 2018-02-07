@@ -4,19 +4,16 @@ public class Searched {
 
     private DocNodeType type;
     private String id;
-    private boolean rangedSearch;
     private String lastId;
 
     public Searched(DocNodeType type, String id) {
         this.type = type;
         this.id = id;
-        rangedSearch = false;
         if(this.id.contains(":")){
             String[] tmp = this.id.split(":");
             this.id = tmp[0];
             lastId = tmp[1];
-            rangedSearch = true;
-        }
+        } else this.lastId = id;
     }
 
     public DocNodeType getType() {
@@ -29,10 +26,6 @@ public class Searched {
 
     public String getLastId() {
         return lastId;
-    }
-
-    public boolean isRangedSearch() {
-        return rangedSearch;
     }
 
     public void refactor(String s) {

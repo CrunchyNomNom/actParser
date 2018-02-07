@@ -64,6 +64,9 @@ public class Input {
                 query.add(s);
             }
         }
+        if (query.isEmpty())
+            query.add(new Searched(DocNodeType.ROOT, "0"));
+
         return query;
     }
 
@@ -77,5 +80,11 @@ public class Input {
             case "l":      return DocNodeType.LITERA;
             default:       return DocNodeType.UNDEFINED;
         }
+    }
+
+    public boolean isTOC(){
+        if(cmd.hasOption("s"))
+            return true;
+        return false;
     }
 }

@@ -30,13 +30,16 @@ public class DocNode {
 
     public String getId() { return id; }
 
-    @Override
-    public String toString() {
+    public String toString(boolean isTOC) {
         String result = content;
-        for(DocNode node : list)
-            result = result + "\n" + node.toString();
+        for(DocNode node : list){
+            if(!(isTOC && node.getType().getPriority() < 5))
+                result = result + "\r\n" + node.toString(isTOC);
+        }
         return result;
     }
+
+    public String getContent() { return content; }
 
     public void setContent(String content) {
         this.content = content;
