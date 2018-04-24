@@ -1,7 +1,10 @@
-﻿# actParser
+# actParser
 
 Zadanie 1. na Programowanie Obiektowe
 Autor: Mikołaj Pniak
+
+Opis projektu oraz przykładowe pliki do parsowania można znaleźć pod adresem:
+https://github.com/apohllo/obiektowe-lab/tree/master/lab8
 
 Kod kompletny i w pełni funkcjonalny.
 Zgodny z Linuxem (newline = \n), UTF-8.
